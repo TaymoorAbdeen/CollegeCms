@@ -1,0 +1,667 @@
+npm install
+npm install admin-lte@v3.0.0-alpha.2 --save
+------------------------------------------------
+add two commands to MairiaDB
+------------------------------------------------
+create master.blade.php and fill this from
+view-source:https://adminlte.io/themes/dev/AdminLTE/starter.html
+------------------------------------------------
+resources\js\bootstrap.js
+in line 14 write the command << require('admin-lte'); >>  after require('bootstrap');
+and you can get the data of the command from package.json in  "dependencies"
+------------------------------------------------
+npm run dev
+npm run watch
+------------------------------------------------
+resources\sass\app.scss
+in line 10 write the command << @import '~admin-lte/dist/css/adminlte.css'; >> after @import '~bootstrap/scss/bootstrap';
+
+------------------------------------------------
+npm install @fortawesome/fontawesome-free
+------------------------------------------------
+copy the record from
+package.json
+in "dependencies"
+        << "@fortawesome/fontawesome-free": "^5.7.1", >>
+and paste to the 
+------------------------------------------------
+resources\sass\app.scss
+write << resources\sass\app.scss >> after 
+// Variables
+@import 'variables';
+------------------------------------------------
+resources\sass\app.scss
+write <<
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+>>
+after
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~admin-lte/dist/css/adminlte.css';
+
+
+------------------------------------------------
+resources\views\layouts\master.blade.php
+customizing
+remove the
+<!-- Left navbar links -->
+reomve
+<!-- Right navbar links -->
+add
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+    </ul>
+
+remove
+  <!-- Control Sidebar -->
+
+add 
+<i class="fas fa-tachometer-alt"></i>	
+
+
+
+
+
+------------------------------------------------
+git commands
+$ git remote add origin https://github.com/TaymoorAbdeen/kirkuk.git
+$ git push -u origin master
+
+------------------------------------------------
+npm install vue-router
+
+------------------------------------------------
+resources\views\layouts\master.blade.php
+add 
+        <router-view></router-view>
+
+add id='app' after body
+
+------------------------------------------------
+resources\js\app.js
+add
+<<
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+let routes = [
+    { path: '/dashborad', component: require('./components/Dashborad.vue').default },
+    { path: '/profile', component: require('./components/Profile.vue').default }
+]
+const router = new VueRouter({
+    routes // short for `routes: routes`
+})
+>>
+
+after window.Vue = require('vue');
+
+and write router in end 
+const app = new Vue({
+    el: '#app',
+    router
+});
+------------------------------------------------
+in master.blade.php add
+<<
+   <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+}}
+>>
+------------------------------------------------
+in master.blade.php
+
+change the <a> -> <router-link> and href -> to
+------------------------------------------------
+app.js
+add mode:'history',
+in const router = new VueRouter
+for make link as http://127.0.0.1:8000/dashborad
+------------------------------------------------
+web.php
+Route::get("{path}", "HomeController@index")->where('path', '.+');
+------------------------------------------------
+resources\sass\app.scss
+add
+// for router link in vue
+.router-link-exact-active {
+  background-color: #007bff;
+  color: #fff !important
+}
+------------------------------------------------
+logout:
+         <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+              <i class="fa fa-power-off"></i>
+              <p>
+                  {{ __('Logout') }}
+              </p>
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+          </li>
+------------------------------------------------
+change colors
+and make color classes in the _variable.scss
+like as
+.blue {
+    color: $blue;
+}
+and use this class in the fontawesome
+------------------------------------------------
+create users componet
+    { path: '/users', component: require('./components/Users.vue').default },
+ and customize the link in master
+router-link and to.
+and customize add table and buttons and modal and any thing if you love it.
+------------------------------------------------
+install the vform library 
+https://github.com/cretueusebiu/vform
+
+in app.js
+
+import { Form, HasError, AlertError } from 'vform';
+window.Form = Form;
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
+
+npm i axios vform
+------------------------------------------------
+Users.vue
+add
+
+data() {
+    return {
+        form:Form({
+        'id': '',
+        'name': '',
+        'email': '',
+        'password': '',
+        'type': '',
+        'bio': '',
+        'photo': '',
+        })
+    }
+},
+    in <script> in export default function
+
+add form inputs in modal
+<form>
+ <div class="form-group">
+  <input
+    v-model="form.name"
+    type="text"
+    name="name"
+    placeholder="Enter Name"
+    class="form-control"
+    :class="{ 'is-invalid': form.errors.has('name') }"
+  >
+    <has-error :form="form" field="name"></has-error>
+  </div>
+</form>
+
+add
+  methods: {
+        createUser() {
+            this.form.post('api/user');
+        }
+  },
+
+  to the export default
+------------------------------------------------
+
+php arrtisan make:contrller API/UserController --api
+
+------------------------------------------------
+routes\api.php
+
+add
+Route::apiResources([
+    'user' => 'API\UserController'
+]);
+------------------------------------------------
+app\Http\Controllers\API\UserController.php
+add
+use Illuminate\Support\Facades\Hash;
+use App\User;
+    public function store(Request $request)
+    {
+        return User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'type' => $request['type'],
+            'bio' => $request['bio'],
+            'photo' => $request['photo'],
+            'password' => Hash::make($request['password']),
+        ]);
+        // return $request->all();
+    }
+------------------------------------------------
+add validation in the store new user controller
+
+$this->validate($request, [
+    'name'  =>  'required|string|max:50|',
+    'email'  =>  'required|string|email|max:100|uniqe:users',
+    'password'  =>  ' |min:6',
+]);
+------------------------------------------------
+17
+index Controller
+  return User::latest()->paginate(10);
+
+reterive data from the index in the Users.vue
+script>
+export default {
+  data() {
+    return {
+      users: {},
+      form: new Form({
+        name: "",
+        email: "",
+        password: "",
+        type: "",
+        bio: "",
+        photo: ""
+      })
+    }
+  },
+  methods: {
+        loadUsers() {
+          axios.get('api/user').then(({ data }) => (this.users = data.data))
+        },
+        createUser() {
+            this.form.post('api/user');
+        }
+
+  },
+  created() {
+    this.loadUsers();
+  }
+};
+</script>
+
+and show the users by v-for
+
+<tr v-for="user in users" :key="user.id">
+  <td>{{user.id}}</td>
+  <td>{{user.name}}</td>
+  <td>{{user.email}}</td>
+  <td>{{user.type}}</td>
+  <td>{{user.created_at}}</td>
+  <td>
+    <a href="#">
+      <i class="fa fa-edit"></i>
+    </a>
+    &nbsp; / &nbsp;
+    <a href="#">
+      <i class="fa fa-trash red"></i>
+    </a>
+  </td>
+</tr>
+------------------------------------------------
+18
+crete fillters in the app.js
+
+Vue.filter('upText', function (text) {
+    return text.toUpperCase();
+    // make first char upper case
+    // return text.charAt(0).toUpperCase() + text.slice(1).
+});
+
+useing this fillter in the Users.vue 
+<td>{{user.type | upText}}</td>
+
+
+install moments.js 
+
+https://momentjs.com
+
+in app.js
+import moment from 'moment';
+and make fillter function
+
+Vue.filter('dateOnly', function (created) {
+    // return moment(created).format("MMMMM Do YYYY");
+    return moment(create).format("MMM Do YY");
+});
+
+<td>{{created_at.type | dateOnly}}</td>
+
+------------------------------------------------
+19
+install vue  --save
+http://hilongjw.github.io/vue-progressbar/index.html
+
+import VueProgressBar from 'vue-progressbar';
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px'
+})
+
+in master.blade.php add
+<vue-progress-bar></vue-progress-bar>
+after 
+<router-view></router-view>
+
+
+add start and finish in the User vue
+this.$Progress.start(), this.$Progress.finish()
+as
+createUser() {
+  this.$Progress.start()
+  this.form.post('api/user');     
+  this.$Progress.finish()
+}
+------------------------------------------------
+20
+https://sweetalert2.github.io/
+
+npm install sweetalert2 --save
+
+add import in app.js
+import swal from 'sweetalert2'
+window.swal = swal;
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+  });
+window.toast = toast;
+
+
+in User.vue
+add to show successfully ok
+toast.fire({
+  type: 'success',
+  title: 'User created successfully'
+})
+
+hide the modal after the create
+  $('#addNew').modal('hide');
+
+------------------------------------------------
+21 update data every 3s
+after add user show new user with user table 
+
+add setInterval function in User.vue
+  created() {
+    this.loadUsers();
+    setInterval( () => this.loadUsers(), 3000);
+  }
+------------------------------------------------
+22 another method to send http request
+use custom event vue it's if something happen then trigged function
+
+https://vuejs.org/v2/guide/components-custom-events.html
+
+make globaly event listener
+in app.js
+window.Fire = new Vue();
+in User.vue
+
+    in createUser() function
+    Fire.$emit('AfterCreate')
+
+    and in 
+    created() {
+    this.loadUsers();
+    Fire.$on('AfterCreate', () => {this.loadUsers()}
+    }
+------------------------------------------------
+23
+add promise .then and .catch in the User.vue for before hide the modal
+(detect the http request is successfully ?)
+
+createUser() {
+  this.$Progress.start()
+  this.form.post('api/user')
+
+  .then(() => {
+    $('#addNew').modal('hide')
+
+    Fire.$emit('AfterCreate')
+
+    toast.fire({
+      type: 'success',
+      title: 'User created successfully'
+    })
+    
+    this.$Progress.finish()
+  })
+
+  .catch(() => {
+
+  })
+}
+
+------------------------------------------------
+24
+Delete user with ajax request and question user are your sure to Delete? using sweetalert2
+
+Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.value) {
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+  }
+})
+in the delete user function
+
+in User.vue 
+in delete button add the event
+
+  <a href="#" @click="deleteUser(user.id)">
+
+and in the methods send requset to the server
+
+    deleteUser(id) {
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+
+  if (result.value) {
+              // send request to the server
+              this.form.delete('/api/user/' + id).then(()=>{
+                // if send success
+                Fire.$emit("afterEvent");
+
+                swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                )
+              }).catch(()=> {
+                // if any error
+                swal.fire({
+                  title: 'Failed !!!',
+                  text: "there many error",
+                  type: 'warning',
+                })
+              })
+        }
+
+      })
+    },
+
+    in UserController
+    public function destroy($id)
+    {
+        // find the user
+        $user = User::findOrFail($id);
+        // delete user
+        $user->delete();
+    }
+
+
+------------------------------------------------
+25
+using one modal for create and delete:
+
+remove the                 
+data-toggle="modal"
+data-target="#addNew"
+from modal and create function @click="newModal()"
+
+and add new function 
+
+newModal() {
+    this.form.reset();
+    $("#addNew").modal("show");
+  },
+
+
+edit user info
+
+add event of the edit button
+  <a href="#" @click="editUser(user)">
+
+and write editUser function
+editUser(user) {
+  this.form.reset();
+  $("#addNew").modal("show");
+  this.form.fill(user);
+},
+
+------------------------------------------------
+26
+update data in the database
+and switch between editMode and createMode of modal using conditional
+
+add the 'editMode' variable in 
+  data() {
+    return {
+      editMode: true,
+
+and create this functions
+
+
+and change this sections in the User.vue
+
+change the form event to two function
+<form @submit.prevent=" editMode ? updateUser() : createUser()">
+
+<div class="modal-header">
+  <h5 v-show="editMode" class="modal-title" id="addNewTitle">Edit User</h5>
+  <h5 v-show="!editMode" class="modal-title" id="addNewTitle">Add New</h5>
+
+and this 
+  <button v-show="editMode" type="submit" class="btn btn-success">Update</button>
+  <button v-show="!editMode" type="submit" class="btn btn-primary">Create</button>
+
+ methods: {
+    updateUser() {
+      // update commands
+    },
+    editUser(user) {
+      this.editMode = true;
+      this.form.reset();
+      $("#addNew").modal("show");
+      this.form.fill(user);
+    },
+    newModal() {
+      this.editMode = false ;
+      this.form.reset();
+      $("#addNew").modal("show");
+    },
+------------------------------------------------
+27
+updat data in the database
+
+in UserController
+    public function update(Request $request, $id)
+    {
+        $user = User::FindOrFail($id);
+        $this->validate($request, [
+            'name'  =>  'required|string|max:50|',
+            // email validation
+            'email'  =>  'required|string|email|max:100|unique:users,email,'.$user->id,
+            'password'  =>  'somtimes|min:6',
+        ]);
+
+        // update
+
+        $user->update($request->all());
+
+        // return ['message' => $id . ' is updated'];
+    }
+
+in User.vue
+
+updateUser() {
+  this.$Progress.start();
+  // this id for user data
+  this.form.put('/api/user/' + this.form.id)
+  .then(() => {
+    $("#addNew").modal('hide');
+    swal.fire (
+      'Update',
+      'User info has updated',
+      'success'
+    )
+    this.$Progress.finish();
+    Fire.$emit("afterEvent");
+  })
+  .catch(()=> {
+    this.$Progress.fail();
+  });
+},
+
+------------------------------------------------
+28
+secuirty issues with while developing in api with laravel
+
+if you write
+kirkuk.test/api/user
+you can get
+
+{"current_page":1,"data":
+[{"id":23,"name":"taymoor after all action",
+"email":"all@gmail.comand",
+"type":"author",
+"bio":"this is all actionthis f",
+"photo":null,
+"created_at":"2019-02-09 13:03:50",
+"updated_at":"2019-02-09 13:04:23"}]
+
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
