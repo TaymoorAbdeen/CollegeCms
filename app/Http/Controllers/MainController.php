@@ -20,6 +20,7 @@ class MainController extends Controller
 
     public function logout(){
         session()->forget('user');
+
         session()->flush();
         return redirect('/');
     }
@@ -83,7 +84,7 @@ class MainController extends Controller
         // if id is teacher and the id hasn't been used before  update used = 1
 
         if($type['id_type']==1 && $type['used']==0){
-          //  idReg::select('id_type','used')->where('id_given','=',request('id'))->update(['used'=>1]);
+           idReg::select('id_type','used')->where('id_given','=',request('id'))->update(['used'=>1]);
             session()->put('college_id', $type['college_id']);
             session()->put('department_id',$type['department_id']);
             // selecting only the lectures that are not being teached
@@ -99,7 +100,7 @@ class MainController extends Controller
         // checking id id is student
        else if($type['id_type']==2 && $type['used']==0){
            
-        //idReg::select('id_type','used')->where('id_given','=',request('id'))->update(['used'=>1]);
+        idReg::select('id_type','used')->where('id_given','=',request('id'))->update(['used'=>1]);
          
            session()->put('college_id', $type['college_id']);
            session()->put('department_id',$type['department_id']);
@@ -110,7 +111,7 @@ class MainController extends Controller
         //checking id is admin
        else if($type['id_type']==0 && $type['used']==0){
                  
-      //  idReg::select('id_type','used')->where('id_given','=',request('id'))->update(['used'=>1]); 
+        idReg::select('id_type','used')->where('id_given','=',request('id'))->update(['used'=>1]); 
         session()->put('college_id', $type['college_id']);
         session()->put('department_id',$type['department_id']);
         

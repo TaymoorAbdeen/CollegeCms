@@ -197,7 +197,7 @@ class StudentController extends Controller
     
          $department =   DB::table('departments')->where('college_id','=',$student->college_id)->first();
  
-        return view('student.show-info',compact(['student','lectures','college','department']));
+        return view('student.view-profile',compact(['student','lectures','college','department']));
 
     }
     

@@ -84,12 +84,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <i class="fas fa-tachometer-alt blue"></i>
 
                     <p>
-                        Marks
+                       Post or Edit Marks
                     </p>
                   </a>    
                   @endif
                   @if (session()->get('user')=='teacher')
-                  <a class="nav-link nav-click" href="/select-lecture">
+                  <a class="nav-link nav-click" href="/create-lecture">
                     <i class="fas fa-tachometer-alt blue"></i>
 
                     <p>
@@ -117,11 +117,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li class="nav-item has-treeview">
 
                   @if (session()->get('user')=='admin')
-                  <a class="nav-link nav-click" href="/edit-marks-s-lecture">
+                  <a class="nav-link nav-click" href="/lectures/create/timetable">
                     <i class="fas fa-tachometer-alt green"></i>
 
                     <p>
-                        Marks
+                        Post Timetable 
                     </p>
                   </a>    
                   @endif
@@ -152,20 +152,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item has-treeview">
 
                   @if (session()->get('user')=='admin')
-                  <a class="nav-link nav-click" href="/edit-marks-s-lecture">
+                  <a class="nav-link nav-click" href="/lectures/timetables">
                     <i class="fas fa-tachometer-alt blue"></i>
 
                     <p>
-                        Marks
+                        Update timetables 
                     </p>
                   </a>    
                   @endif
                   @if (session()->get('user')=='teacher')
-                  <a class="nav-link nav-click" href="/select-lecture">
-                    <i class="fas fa-tachometer-alt blue"></i>
+                  <a class="nav-link nav-click" href="/select-lecture-absence">
+                    <i class="fas fa-tachometer-alt red"></i>
 
                     <p>
-                        Post Lecture
+                        Edit absence
                     </p>
                    </a>
                   @endif
@@ -189,20 +189,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class="nav-item has-treeview">
 
               @if (session()->get('user')=='admin')
-              <a class="nav-link nav-click" href="/edit-marks-s-lecture">
+              <a class="nav-link nav-click" href="/select/id/te-st">
                 <i class="fas fa-tachometer-alt blue"></i>
 
                 <p>
-                    Marks
+                    Create Id
                 </p>
               </a>    
               @endif
               @if (session()->get('user')=='teacher')
-              <a class="nav-link nav-click" href="/select-lecture">
-                <i class="fas fa-tachometer-alt blue"></i>
+              <a class="nav-link nav-click" href="show/timetable/te">
+                <i class="fas fa-tachometer-alt orange"></i>
 
                 <p>
-                    Post Lecture
+                    View Timetables
                 </p>
                </a>
               @endif
@@ -213,7 +213,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <i class="fas fa-tachometer-alt white"></i>
 
                <p>
-                Show Timetable
+                View Timetable
                 </p>
                </a>
 
@@ -221,8 +221,39 @@ scratch. This page gets rid of all links and provides the needed markup only.
            </li>
 
            {{--  end of fourth link  --}}
+           <li class="nav-item has-treeview">
 
-        
+              @if (session()->get('user')=='admin')
+              <a class="nav-link nav-click" href="/info/a">
+                <i class="fas fa-tachometer-alt yellow"></i>
+
+                <p>
+                    View Profile
+                </p>
+              </a>    
+              @endif
+              @if (session()->get('user')=='teacher')
+              <a class="nav-link nav-click" href="/info/t">
+                <i class="fas fa-tachometer-alt orange"></i>
+
+                <p>
+                    View Profile
+                </p>
+               </a>
+              @endif
+
+              @if (session()->get('user')=='student')
+              <a class="nav-link nav-click" href="/info/s">
+                <i class="fas fa-tachometer-alt orange"></i>
+
+                <p>
+                    View Profile
+                </p>
+               </a>
+              @endif
+           </li>
+           
+           {{-- end of fifth link --}}
           <li class="nav-item">
              <a   href="/logout" class="nav-link"   >
               <i class="fa fa-power-off red"></i>

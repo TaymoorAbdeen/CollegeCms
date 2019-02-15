@@ -9,7 +9,8 @@ use App\Subject;
 use App\Absence;
 use App\Student;
 use App\Timetable;
-  
+use Illuminate\Support\Facades\DB;
+
 class TeacherController extends Controller
 {
     //
@@ -111,12 +112,12 @@ class TeacherController extends Controller
    */
    public function createLecture(Request $request){
       
-       session()->put('lecture_id',request('lecture_id'));
-     return view('teacher.create-lecture');
+    $lectures = Lecture::select('name','id')->where('teacher_id','=',session()->get('user_id'))->get();
+    return view('teacher.create-lecture',compact('lectures'));
    }
 
    public function storeLecture(Request $request){
-        $this->validate($request,[
+          $this->validate($request,[
 
         'name' => 'required',
         'description' =>'required',
@@ -134,19 +135,15 @@ class TeacherController extends Controller
         $inputFile->move($destinationPath, $name);
         $file = $name;
       
-        
-         Subject::create([
+          Subject::create([
 
               'name'=> $request->name,
               'description' =>$request->description,
               'attachment'=> $file,
-              'lecture_id' =>session()->get('lecture_id'),
+              'lecture_id' =>$request->lecture_id,
               
          ]);
-         session()->forget('lecture_id');
-         return view('layouts.master');
-    
-
+          return view('layouts.master');
 
    }
    public function selectLectureUpDel(){
@@ -193,28 +190,26 @@ class TeacherController extends Controller
 
    }
    public function selectLectureAbsence(){
-       $teacher = Teacher::find(session()->get('user_id'));
 
+    $lectures = Lecture::select('name','id')->where('teacher_id','=',session()->get('user_id'))->get();
+    $url = '/edit-absence';
+     return view('teacher.select-lecture',compact(['lectures','url']));
 
-      $lectures = Lecture::select('name','stage','teacher_id','id')
-      ->where('department_id','=',$teacher->department_id)
-      ->where('college_id','=',$teacher->college_id)->get();
-
-    return view('teacher.select-lecture-absence',compact('lectures'));          
-
+ 
    }
 
    public function editAbsence(){
-    $arr = request('lecture');
-    $arr = explode(" ", $arr);
-    $lecture_id = $arr[0];
-    $teacher_id = $arr[1];
-    $stage = $arr[2];
-    $lecture = Lecture::find($lecture_id);
+     
+    $lecture = Lecture::find(request('lecture_id'));
     
      // checking if the abscense table was created before
      $absences = Absence::where('lecture_id','=',$lecture->id)->get();
-      if(count($absences)){
+     $teacher_id = $lecture->teacher_id;
+     $lecture_id = $lecture->id;
+     session()->put('lecture_id',$lecture_id);
+
+     
+       if(count($absences)){
           $students = Student::select('name','id')
          ->where('department_id','=',$lecture->department_id)
          ->where('college_id','=',$lecture->college_id)
@@ -231,16 +226,9 @@ class TeacherController extends Controller
       ->where('stage','=',$lecture->stage) 
       ->get();
      
-return view('teacher.edit-absence-table',compact(['students','teacher_id','lecture_id']));
-
-
-
-
-
-
-
- 
-   }
+      return view('teacher.edit-absence-table',compact(['students','teacher_id','lecture_id']));
+     
+    }
    public function storeAbsence(){
     $absences = request()->all();
          
@@ -249,8 +237,8 @@ return view('teacher.edit-absence-table',compact(['students','teacher_id','lectu
            $matchThese = array('student_id'=>$absences['student_id'][$j]);
            Absence::updateOrCreate($matchThese,[
                'student_id'=>$absences['student_id'][$j],
-               'teacher_id'=>$absences['teacher_id'][$j],
-               'lecture_id'=>$absences['lecture_id'][$j],
+               'teacher_id'=>session()->get('user_id'),
+               'lecture_id'=>session()->get('lecture_id'),
                'first_lecture'=>$absences['first_lecture'][$j],
                'second_lecture'=>$absences['second_lecture'][$j],
                'third_lecture'=>$absences['third_lecture'][$j],
@@ -265,21 +253,36 @@ return view('teacher.edit-absence-table',compact(['students','teacher_id','lectu
            ]);
         }
 
-    
-return view('teacher.main');
+    session()->forget('lecture_id');
+return redirect('/main');
 
 
    }
 
    public function showTimetable(){
-       $teacher = Teacher::find(session()->get('user_id'))->first();
+        $teacher = Teacher::find(session()->get('user_id'))->first();
+
        $timetables = Timetable::where('college_id','=',$teacher->college_id)
                                 ->where('department_id','=',$teacher->department_id)->get();
-
+ 
        return view('teacher.show-timetables',compact('timetables'));                          
 
 
 
+   }
+
+   public function showInfo(){
+     
+    $teacher = Teacher::find(session()->get('user_id'))->first();
+ 
+    $college =   DB::table('colleges')->find($teacher->college_id);
+    $teaches = str_replace(" ",",",$teacher->teaches);
+
+    $department =   DB::table('departments')->where('college_id','=',$teacher->college_id)->first();
+    return view('teacher.view-profile',compact(['teacher','college','department','teaches']));
+
+
+     
    }
 
 }

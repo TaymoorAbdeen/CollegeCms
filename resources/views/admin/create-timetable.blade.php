@@ -5,20 +5,17 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" action="/lectures" method="POST" enctype="multipart/form-data">
+        <form role="form" action="/lectures/timetable" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
           <div class="card-body">
             <div class="form-group">
-              <label for="title">Title of lecture</label>
-              <input type="text" name="name" class="form-control"   >
+              <label for="title">Timetable description </label>
+              <input type="text" name="description" class="form-control"   >
             </div>
-            <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea rows="3" name="description" class="form-control"  >  </textarea>
-                  </div>
+          
            
             <div class="form-group">
-              <label for="exampleInputFile">File input</label>
+              <label for="exampleInputFile">Timetable attachment</label>
               <div class="input-group">
                 <div class="custom-file">
                   <input type="file" name="attachment" class="custom-file-input" id="exampleInputFile">
@@ -30,11 +27,12 @@
               </div>
 
                 <div class="form-group">
-                  <label for="lectures">select the lecture</label>
-                  <select class="form-control select2 select2-hidden-accessible" name="lecture_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                    @foreach ($lectures as $lecture)
-                    <option value="{{$lecture->id}}">{{$lecture->name}}</option>
-                    @endforeach
+                  <label for="lectures">select the Stage</label>
+                  <select class="form-control select2 select2-hidden-accessible" name="stage" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
                   </select>
                 </div>
                   

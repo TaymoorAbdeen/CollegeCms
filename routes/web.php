@@ -26,8 +26,7 @@ Route::get('/info/s','StudentController@showInfo');
 // teacher controllers 
 Route::get('/regtch','TeacherController@register');
 Route::post('/regtch','TeacherController@store');
- Route::get('/select-lecture','TeacherController@selectLecture');
-Route::post('/create-lecture','TeacherController@createLecture');
+ Route::get('/create-lecture','TeacherController@createLecture');
 Route::get('/lectures','TeacherController@selectLectureUpDel');
 Route::post('/lectures','TeacherController@storeLecture');
 Route::post('/lectures/all','TeacherController@showLecture');

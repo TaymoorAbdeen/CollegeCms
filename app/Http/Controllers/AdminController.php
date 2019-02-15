@@ -9,6 +9,8 @@ use App\Student;
 use App\Mark;
 use App\Timetable;
 use App\idReg;
+use Illuminate\Support\Facades\DB;
+
 class AdminController extends Controller
 {
     //
@@ -62,7 +64,8 @@ class AdminController extends Controller
      $lectures = Lecture::select('name','stage','teacher_id','id')
                 ->where('department_id','=',$adminDepAndCollege->department_id)
                 ->where('college_id','=',$adminDepAndCollege->college_id)->get();
-    return view('admin.edit-marks-select-lecture',compact('lectures'));                                  
+     $url = '/edit-marks-view';        
+    return view('admin.select-lecture',compact(['lectures','url']));                                  
 
     
     }
@@ -72,12 +75,14 @@ class AdminController extends Controller
     
     */
     public function editMarksView(){
-        $arr = request('lecture');
-        $arr = explode(" ", $arr);
-       $lecture_id = $arr[0];
-       $teacher_id = $arr[1];
-       $stage = $arr[2];
-        $lecture = Lecture::find($lecture_id);
+       
+        $lecture = Lecture::find(request('lecture_id'));
+        $lecture_id = $lecture->id;
+        $teacher_id = $lecture->teacher_id;
+        
+        session()->put('lecture_id',$lecture_id);
+        session()->put('teacher_id',$teacher_id);
+        
 
         // checking if the marks table was created before
         $marks = Mark::where('lecture_id','=',$lecture->id)->get();
@@ -89,7 +94,7 @@ class AdminController extends Controller
             ->where('stage','=',$lecture->stage) 
             ->get();
 
-         return view('admin.edit-marks-table',compact(['students','marks','teacher_id','lecture_id']));
+         return view('admin.edit-marks',compact(['students','marks','teacher_id','lecture_id']));
 
          } 
 
@@ -115,8 +120,8 @@ class AdminController extends Controller
                 $matchThese = array('student_id'=>$marks['student_id'][$j]);
                 Mark::updateOrCreate($matchThese,[
                     'student_id'=>$marks['student_id'][$j],
-                    'teacher_id'=>$marks['teacher_id'][$j],
-                    'lecture_id'=>$marks['lecture_id'][$j],
+                    'teacher_id'=>session()->get('teacher_id'),
+                    'lecture_id'=>session()->get('lecture_id'),
                     'before_midterm'=>$marks['before_midterm'][$j],
                     'midterm'=> $marks['midterm'][$j],
                     'before_final'=>$marks['before_final'][$j],
@@ -126,8 +131,11 @@ class AdminController extends Controller
                 ]);
              }
 
+             session()->forget('lecture_id');
+             session()->forget('teacher_id');
+
          
-    return view('admin.main');
+    return redirect('/main');
  
 
      }
@@ -163,7 +171,7 @@ class AdminController extends Controller
              'department_id'=>$admin->department_id
          ]);
 
-         return view('admin.main');
+         return redirect('/main');
 
      }
 
@@ -175,8 +183,11 @@ class AdminController extends Controller
         $timetables = Timetable::where('college_id','=',$admin->college_id)->
                                  where('department_id','=',$admin->department_id)
                                 ->orderBy('created_at','desc')->get();
+
+                                return view('admin.update-timetables',compact('timetables'));                       
+                        
                                 
-        return view('admin.show-timetable',compact('timetables'));                       
+        dd($timetables);                         
 
 
       }
@@ -185,14 +196,14 @@ class AdminController extends Controller
           $timetable->description = request('description');
           $timetable->stage = request('stage');
           $timetable->save();
-          return view('admin.main');
+          return redirect('/main');
 
       }
       public function deleteTimetable($id){
         $timetable = Timetable::findOrFail($id);
         $timetable->delete();
-        return view('admin.main');
-      }
+        return redirect('/main');
+    }
       public function selectIdType(){
       return view('admin.select-id-type');
 
@@ -228,6 +239,14 @@ class AdminController extends Controller
             }
  
         }
+
+      }
+      public function showInfo(){
+          $admin = Admin::find(session()->get('user_id'));
+          $college =   DB::table('colleges')->find($admin->college_id);
+          $department =   DB::table('departments')->where('college_id','=',$admin->college_id)->first();
+            return view('admin.view-profile',compact(['admin','college','department']));
+
 
       }
 
