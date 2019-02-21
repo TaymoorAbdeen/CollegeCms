@@ -4,7 +4,7 @@
         <div class="callout callout-danger">
           <h5>Absence count</h5>
 
-          <p>You have: {{$count}} absence and attended: {{$took}} out of: {{$sum}} Lectures</p>
+          <p>You have: {{$count}} absence and attended {{$took}} out of {{$count+$took}} Lectures</p>
         </div>
        
       </div>

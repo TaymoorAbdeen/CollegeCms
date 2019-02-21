@@ -45,15 +45,13 @@
                        <tr>
                            <input type="hidden" name="student_id[]" id="" value="{{$student->id}}" >          
                                
-                          
-            
-                        <td>{{$student->name}} </td> 
-                        <td><  input size="5" style="border:none;"  type="text" name="before_midterm[]"> </td>
-                        <td >< input size="5" style="border:none;" type="text" name="midterm[]"> </td>
-                        <td > <input size="5" style="border:none;" type="text" name="before_final[]"></td>
-                        <td > <input size="5" style="border:none;" type="text" name="final[]"></td>
-                        <td > <input size="5" style="border:none;" type="text" name="midterm_second_attempt[]"></td>
-                        <td > <input size="5" style="border:none;" type="text" name="final_second_attempt[]"></td>
+                        <td> {{$student->name}} </td> 
+                        <td>  <input size="10" style="border:none;"  type="text" name="before_midterm[]"> </td>
+                        <td > <input size="10" style="border:none;" type="text" name="midterm[]"> </td>
+                        <td > <input size="10" style="border:none;" type="text" name="before_final[]"></td>
+                        <td > <input size="10" style="border:none;" type="text" name="final[]"></td>
+                        <td > <input size="10" style="border:none;" type="text" name="midterm_second_attempt[]"></td>
+                        <td ><input size="10" style="border:none;" type="text" name="final_second_attempt[]"></td>
                        </tr>
            
                     @endforeach

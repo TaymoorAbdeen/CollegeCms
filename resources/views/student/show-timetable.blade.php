@@ -11,6 +11,8 @@
                           <h6 class="card-title">{{$timetable->description}}</h6>
                 
                            <a href="{{URL::asset('uploads/timetables')}}{{'/'.$timetable->attachment}}" download="newfilename">Download Timetable</a>
+                        <br>   <label> Posted {{$timetable->created_at->diffForHumans() }}</label>
+
                         </div>
                     </div>
             </div>

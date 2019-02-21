@@ -8,7 +8,7 @@
  
           <h3 class="profile-username text-center">{{$student->name}}</h3>
 
-          <p class="text-muted text-center">Software Engineer</p>
+          <p class="text-muted text-center">Student</p>
 
           <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">

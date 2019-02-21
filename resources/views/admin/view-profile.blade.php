@@ -7,14 +7,14 @@
           </div>
            <h3 class="profile-username text-center">{{$admin->name}}</h3>
 
-          <p class="text-muted text-center">Software Engineer</p>
+          <p class="text-muted text-center">Admin</p>
 
           <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">
                   <b>Email</b> <a class="float-right">{{$admin->email}}</a>
                 </li>
  
- 
+    
           
             <li class="list-group-item">
               <b>Admin in College:</b> <a class="float-right">{{$college->name}}</a>

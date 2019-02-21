@@ -1,10 +1,6 @@
 
 <!DOCTYPE html>
-<!--
-This is a starter template page   this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-
+ 
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -12,8 +8,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <!-- CSRF Token -->
  
-
-  <title>AdminLTE 3 | Starter</title>
+<style>
+a{
+  font-size: 1.2em;
+}
+</style>
+  <title>College content management system </title>
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="hold-transition sidebar-mini">
@@ -62,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{URL::asset('img/profile.png')}}" class="img-circle elevation-2" alt="User Image">
+           <img src="{{URL::asset('uploads/images/profile_pictures')}}{{'/'.session()->get('profile_picture')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">
@@ -76,6 +76,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               
+               
+              <li class="nav-item has-treeview">
+                @if (session()->get('user')=='admin')
+                <a class="nav-link nav-click" href="/dashboard">
+                  <i class="fas fa-tachometer-alt blue"></i>
+
+                  <p>
+                     Dashboard
+                  </p>
+                </a>    
+                @endif 
+              </li>
 
                <li class="nav-item has-treeview">
 
@@ -138,10 +151,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
              @if (session()->get('user')=='student')
   
                    <a class="nav-link nav-click" href="/select-lecture-marks">
-                   <i class="fas fa-tachometer-alt green"></i>
+                   <i class="fas fa-marker green"></i>
 
                    <p>
-                    View Marks 
+                     Marks 
                     </p>
                    </a>
 
@@ -173,10 +186,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
              @if (session()->get('user')=='student')
   
                    <a class="nav-link nav-click" href="/absence/lectures">
-                   <i class="fas fa-tachometer-alt yellow"></i>
+                   <i class="fas fa-bed white"></i>
 
                    <p>
-                    Show Absence 
+                     Absence 
                     </p>
                    </a>
 
@@ -198,7 +211,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>    
               @endif
               @if (session()->get('user')=='teacher')
-              <a class="nav-link nav-click" href="show/timetable/te">
+              <a class="nav-link nav-click" href="/show/timetable/te">
                 <i class="fas fa-tachometer-alt orange"></i>
 
                 <p>
@@ -209,11 +222,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
          @if (session()->get('user')=='student')
 
-               <a class="nav-link nav-click" href="show/timetable/st">
-               <i class="fas fa-tachometer-alt white"></i>
+               <a class="nav-link nav-click" href="/show/timetable/st">
+               <i class="fas fa-table  pink"></i>
 
                <p>
-                View Timetable
+                 Timetable
                 </p>
                </a>
 
@@ -244,10 +257,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               @if (session()->get('user')=='student')
               <a class="nav-link nav-click" href="/info/s">
-                <i class="fas fa-tachometer-alt orange"></i>
+                <i class="fas fa-info-circle orange"></i>
 
                 <p>
-                    View Profile
+                    Profile
                 </p>
                </a>
               @endif
@@ -282,6 +295,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
 
                   @yield('content')
+                  
+                  @if (Session::has('message'))
+                  <p class="notification is-warning">{{session()->get('message')}}</p>
+          
+                      
+                  @endif
     
       </div><!-- /.container-fluid -->
     </div>

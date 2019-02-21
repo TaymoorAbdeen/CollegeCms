@@ -14,19 +14,27 @@ class MainController extends Controller
 {
     //
     public function index(){
-        
+        if(!empty(session()->get('user')))
+         return redirect('/main');
+
         return view('auth.login');
     }
 
     public function logout(){
-        session()->forget('user');
 
+        session()->forget('user');
         session()->flush();
         return redirect('/');
+
     }
+
     public function mainPage(){
+
+        if(!empty(session()->get('user')))
         return view('layouts.master');
+        return redirect('/');
     }
+
     public function check(Request $request){
         // check if already a user
      if($request->has(['email','password'])){
@@ -40,10 +48,9 @@ class MainController extends Controller
                 session()->put('department_id',$user->department_id);
                 session()->put('stage',$user->stage);
                 session()->put('college_id',$user->college_id);
+                session()->put('profile_picture',$user->profile_picture);
 
-
-
-                 return view('layouts.master',compact('user'));
+                 return redirect('/main');
 
             }
   
@@ -54,22 +61,40 @@ class MainController extends Controller
                 session()->put('user','teacher');
                 session()->put('user_id',$user->id);
                 session()->put('user_name',$user->name);
+                session()->put('profile_picture',$user->profile_picture);
 
-                return view('layouts.master',compact('user'));
+
+                return redirect('/main');
             }
+
+
          }
 
             // if the email exists in the admins table 
            else if($user = Admin::where('email', '=', $request->email)->first()){
-                if( Hash::check($request->password, $user->password)){
+                if( Hash::check($request->password, $user->password)){            
+
+                    
                     session()->put('user','admin');
                     session()->put('user_id',$user->id);
                     session()->put('user_name',$user->name);
+                    session()->put('profile_picture',$user->profile_picture);
 
-                    return view('layouts.master',compact('user'));
+
+                    return redirect('/main');
                 }
+
+                else{
+                     
+                    session()->flash('message','Incorrect Email or password');
+                    return redirect('/');
+               }
+              
              }
-         else dd('wrong email or password');
+           
+
+         session()->flash('message','email and password fields are required');
+         return redirect('/');
      
 
      }
@@ -119,13 +144,15 @@ class MainController extends Controller
 
 
         }
-        else dd('the id has been used');
+
+       session()->flash('message','The Id doesn\'t exist or it has been used');
+        return redirect('/');
 
  
        }
        // if the request has no parameter
-      else dd("you da fool");
-
+      session()->flash('message','You should enter the id given to you');
+      return redirect('/');
 
      }
 

@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label for="attachment"> old attachment</label>
-                <a href="{{URL::asset('uploads/lectures')}}{{'/'.$timetable->attachment}}" download="newfilename">Download the pdf</a>
+                <a href="{{URL::asset('uploads/lectures')}}{{'/'.$timetable->attachment}}" download="newfilename">Download the attachment</a>
             </div>
 
  

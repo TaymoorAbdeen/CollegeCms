@@ -3,6 +3,11 @@
 @foreach ($subjects as $subject)
 
 <div class="card card-primary card-outline">
+                <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                              </div>
         <div class="card-header">
                 <h5 class="m-0">Lecutures</h5>
  
@@ -24,4 +29,7 @@
     @endforeach
 
 @endsection
+ 
+
+
  

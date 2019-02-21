@@ -41,12 +41,12 @@
                         </thead>
                         <tbody>
                             <tr role="row" class="odd">
-                                    @if(!empty($marks->before_midterm))  <td>{{$marks->before_midterm}}</td> @endif
-                                    @if(!empty($marks->midterm))  <td>{{$marks->midterm}}</td> @endif
-                                    @if(!empty($marks->before_final))  <td>{{$marks->before_final}}</td> @endif
-                                    @if(!empty($marks->final))  <td>{{$marks->final}}</td> @endif
-                                    @if(!empty($marks->midterm_second_attempt))  <td>{{$marks->midterm_second_attempt}}</td> @endif
-                                    @if(!empty($marks->final_second_attempt))  <td>{{$marks->final_second_attempt}}</td> @endif
+                                    @if(!empty($marks->before_midterm))  <td <?php  echo " ",($marks->before_midterm < 20 ? 'style="color:red"' : 'style:"color:green"'); ?>  >{{$marks->before_midterm}}</td> @endif
+                                    @if(!empty($marks->midterm))  <td <?php  echo " ",($marks->midterm+$marks->before_midterm < 50 ? 'style="color:red"' : 'style:"color:green"'); ?>  >{{$marks->midterm+$marks->before_midterm}}</td> @endif
+                                    @if(!empty($marks->before_final))  <td <?php  echo " ",($marks->before_final < 20 ? 'style="color:red"' : 'style:"color:green"'); ?>>{{$marks->before_final}}</td> @endif
+                                    @if(!empty($marks->final))  <td <?php  echo " ",($marks->final+$marks->before_final < 50 ? 'style="color:red"' : 'style:"color:green"'); ?>>{{$marks->final+$marks->before_final}}</td> @endif
+                                    @if(!empty($marks->midterm_second_attempt))  <td<?php  echo " ",($marks->midterm_second_attempt+$marks->before_midterm < 50 ? 'style="color:red"' : 'style:"color:green"'); ?>>{{$marks->midterm_second_attempt+$marks->before_midterm}}</td> @endif
+                                    @if(!empty($marks->final_second_attempt))  <td <?php  echo " ",($marks->final_second_attempt+$marks->before_final < 50 ? 'style="color:red"' : 'style:"color:green"'); ?>>{{$marks->final_second_attempt+$marks->before_final}}</td> @endif
                             </tr>
                            
                         </tbody>

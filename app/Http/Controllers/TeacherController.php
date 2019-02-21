@@ -19,9 +19,11 @@ class TeacherController extends Controller
 
     }
     
-    public function index(){
-        return view('teacher.main');
-    }
+ 
+
+     
+    
+
 
       /*
          selecting the teaecher that was just created 
@@ -30,6 +32,12 @@ class TeacherController extends Controller
       
     private function updateLectureId(){
 
+       if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
+ 
         $teacher =Teacher::latest()->first();
         $arr = $teacher->teaches;
         
@@ -46,7 +54,7 @@ class TeacherController extends Controller
 
     }
     public function store(Request $request){
-         $this->validate($request, [
+          $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
             'password'=>'required|confirmed',
@@ -62,7 +70,7 @@ class TeacherController extends Controller
   
               $profile_picture;
               $image = $request->file('profile_picture');
-              $name = $request->email.'.'.$image->getClientOriginalExtension();
+              $name = time().'.'.$image->getClientOriginalExtension();
               $destinationPath = public_path('/uploads/images/profile_pictures');
               $imagePath = $destinationPath. "/".  $name;
               $image->move($destinationPath, $name);
@@ -87,9 +95,11 @@ class TeacherController extends Controller
          session()->put('user','teacher');
          $teacher =Teacher::latest()->first();
          session()->put('user_id',$teacher->id);
+         session()->put('profile_picture',$teacher->profile_picture);
+         session()->put('user_name',$teacher->name);
          $this->updateLectureId();
-         return view('teacher.main',compact('teacher'));
-      
+         return redirect('/main');
+             
     }
 
     /* 
@@ -98,6 +108,11 @@ class TeacherController extends Controller
 
     */
    public function selectLecture(){
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
 
        $lectures = Lecture::select('name','id')->where('teacher_id','=',session()->get('user_id'))->get();
        $url = '/create-lecture';
@@ -111,12 +126,23 @@ class TeacherController extends Controller
 
    */
    public function createLecture(Request $request){
-      
+ 
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
     $lectures = Lecture::select('name','id')->where('teacher_id','=',session()->get('user_id'))->get();
     return view('teacher.create-lecture',compact('lectures'));
    }
 
    public function storeLecture(Request $request){
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
+ 
           $this->validate($request,[
 
         'name' => 'required',
@@ -147,7 +173,12 @@ class TeacherController extends Controller
 
    }
    public function selectLectureUpDel(){
-   
+ 
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
     //
     $lectures = Lecture::select('name','id')->where('teacher_id','=',session()->get('user_id'))->get();
     $url = '/lectures/all';
@@ -162,7 +193,12 @@ class TeacherController extends Controller
    */
   
    public function showLecture(Request $request){
+ 
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
 
+    else if(empty(session()->get('user')))
+    return redirect('/');
       
     $subjects = Subject::where('lecture_id','=',$request->lecture_id)
                ->orderBy('created_at','desc')->get();
@@ -170,6 +206,11 @@ class TeacherController extends Controller
     return view('teacher.show-lectures',compact('subjects'));    
    }
    public function updateLecture($id){
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
        
       $subject = Subject::findOrFail($id);
       $subject->description = request('description');
@@ -182,6 +223,11 @@ class TeacherController extends Controller
 
 
    public function deleteLecture($id){
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
 
     $subject = Subject::findOrFail($id);
      $subject->delete();
@@ -190,6 +236,11 @@ class TeacherController extends Controller
 
    }
    public function selectLectureAbsence(){
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
 
     $lectures = Lecture::select('name','id')->where('teacher_id','=',session()->get('user_id'))->get();
     $url = '/edit-absence';
@@ -199,6 +250,11 @@ class TeacherController extends Controller
    }
 
    public function editAbsence(){
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
      
     $lecture = Lecture::find(request('lecture_id'));
     
@@ -230,6 +286,11 @@ class TeacherController extends Controller
      
     }
    public function storeAbsence(){
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
     $absences = request()->all();
          
     for($i = 0;$i<count($absences);$i++)
@@ -260,7 +321,13 @@ return redirect('/main');
    }
 
    public function showTimetable(){
-        $teacher = Teacher::find(session()->get('user_id'))->first();
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
+ 
+        $teacher = Teacher::find(session()->get('user_id'));
 
        $timetables = Timetable::where('college_id','=',$teacher->college_id)
                                 ->where('department_id','=',$teacher->department_id)->get();
@@ -272,10 +339,15 @@ return redirect('/main');
    }
 
    public function showInfo(){
-     
-    $teacher = Teacher::find(session()->get('user_id'))->first();
+    if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
+    return redirect('/main');
+
+    else if(empty(session()->get('user')))
+    return redirect('/');
  
-    $college =   DB::table('colleges')->find($teacher->college_id);
+     
+    $teacher = Teacher::find(session()->get('user_id'));
+     $college =   DB::table('colleges')->find($teacher->college_id);
     $teaches = str_replace(" ",",",$teacher->teaches);
 
     $department =   DB::table('departments')->where('college_id','=',$teacher->college_id)->first();

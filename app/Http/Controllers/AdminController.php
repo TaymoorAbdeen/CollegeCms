@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Admin;
 use App\Lecture;
 use App\Student;
+use App\Teacher;
 use App\Mark;
 use App\Timetable;
 use App\idReg;
@@ -19,7 +20,7 @@ class AdminController extends Controller
 
     }
     public function store(Request $request){
-        $this->validate($request, [
+         $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
             'password'=>'required|confirmed',
@@ -29,7 +30,7 @@ class AdminController extends Controller
   
           $profile_picture;
               $image = $request->file('profile_picture');
-              $name = $request->email.'.'.$image->getClientOriginalExtension();
+              $name = time().'.'.$image->getClientOriginalExtension();
               $destinationPath = public_path('/uploads/images/profile_pictures');
               $imagePath = $destinationPath. "/".  $name;
               $image->move($destinationPath, $name);
@@ -46,8 +47,10 @@ class AdminController extends Controller
          session()->put('user','admin');
          $admin =Admin::latest()->first();
          session()->put('user_id',$admin->id);
-         return view('admin.main',compact('admin'));
-      
+         session()->put('profile_picture',$admin->profile_picture);
+         session()->put('user_name',$admin->name);
+
+         return redirect('/main');      
     }
 
     /* 
@@ -57,6 +60,11 @@ class AdminController extends Controller
     */
 
     public function editMarksSelectLecture(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
      
      $adminDepAndCollege = Admin::select('college_id','department_id')->
                            where('id','=',session()->get('user_id'))->first();
@@ -75,6 +83,11 @@ class AdminController extends Controller
     
     */
     public function editMarksView(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
        
         $lecture = Lecture::find(request('lecture_id'));
         $lecture_id = $lecture->id;
@@ -108,13 +121,18 @@ class AdminController extends Controller
                   ->where('stage','=',$lecture->stage) 
                   ->get();
                  
-      return view('admin.edit-marks-table',compact(['students','teacher_id','lecture_id']));
+      return view('admin.edit-marks',compact(['students','teacher_id','lecture_id']));
 
      }
 
      public function storeMarks(){
-         $marks = request()->all();
-         
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
+
+         $marks = request()->all(); 
          for($i = 0;$i<count($marks);$i++)
              for($j = 0;$j<count($marks['student_id']);$j++) {
                 $matchThese = array('student_id'=>$marks['student_id'][$j]);
@@ -140,6 +158,11 @@ class AdminController extends Controller
 
      }
      public function createTimetable(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
       return view('admin.create-timetable');
 
      }
@@ -176,6 +199,11 @@ class AdminController extends Controller
      }
 
       public function showTimetable(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
 
         $admin = Admin::select('department_id','college_id')->
                    where('id','=',session()->get('user_id'))->first();
@@ -192,6 +220,11 @@ class AdminController extends Controller
 
       }
       public function updateTimetable($id){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
           $timetable = Timetable::findOrFail($id);
           $timetable->description = request('description');
           $timetable->stage = request('stage');
@@ -200,11 +233,21 @@ class AdminController extends Controller
 
       }
       public function deleteTimetable($id){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
         $timetable = Timetable::findOrFail($id);
         $timetable->delete();
         return redirect('/main');
     }
       public function selectIdType(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
       return view('admin.select-id-type');
 
       }
@@ -242,12 +285,44 @@ class AdminController extends Controller
 
       }
       public function showInfo(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
           $admin = Admin::find(session()->get('user_id'));
           $college =   DB::table('colleges')->find($admin->college_id);
           $department =   DB::table('departments')->where('college_id','=',$admin->college_id)->first();
             return view('admin.view-profile',compact(['admin','college','department']));
 
 
+      }
+      public function dashboard(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
+        $admin = Admin::find(session()->get('user_id'));        
+        $admins = Admin::where('college_id','=',$admin->college_id)->
+                         where('department_id','=',$admin->department_id)->get();
+        $students = Student::where('college_id','=',$admin->college_id)->
+                             where('department_id','=',$admin->department_id)->get();
+         $teachers = Teacher::where('college_id','=',$admin->college_id)->
+                             where('department_id','=',$admin->department_id)->get();    
+        $lectures = Lecture::where('college_id','=',$admin->college_id)->
+                     where('department_id','=',$admin->department_id)->get();       
+
+
+         $numOfAdmins = count($admins);
+         $numOfLectures = count($lectures);
+         $numOfStudents = count($students);
+         $numOfTeachers = count($teachers);
+
+        
+
+
+        return view('admin.dashboard',compact(['numOfAdmins','numOfLectures','numOfTeachers','numOfStudents']));
       }
 
 

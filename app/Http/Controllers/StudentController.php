@@ -12,11 +12,14 @@ use App\Timetable;
 use Illuminate\Support\Facades\DB;
 class StudentController extends Controller
 {
-    
+   
 
+   /*
+    Stores the registeration data in the student table 
+      
+   */
     public function store(Request $request){
-  
-          $this->validate($request, [
+            $this->validate($request, [
           'name' => 'required',
           'email' => 'required',
           'password'=>'required|confirmed',
@@ -27,9 +30,9 @@ class StudentController extends Controller
           'birthdate' => 'required|date'
          ]);
 
-        $profile_picture;
+            $profile_picture;
             $image = $request->file('profile_picture');
-            $name = $request->email.'.'.$image->getClientOriginalExtension();
+            $name =time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/images/profile_pictures');
             $imagePath = $destinationPath. "/".  $name;
             $image->move($destinationPath, $name);
@@ -47,32 +50,46 @@ class StudentController extends Controller
                 'bio'=> $request->bio,
                 'stage'=>$request->stage
                 ]);
+
        session()->put('user','student');
        $student =Student::latest()->first();
        session()->put('user_id',$student->id);
        session()->put('department_id',$student->department_id);
        session()->put('stage',$student->stage);
+       session()->put('profile_picture',$student->profile_picture);
        session()->put('college_id',$student->college_id);
+       session()->put('user_name',$student->name);
+
+       return redirect('/main');
  
-
-       return view('student.main',compact('student'));
-    
-
     }
     public function selectLectureMarks(){
-        
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
         $lectures = Lecture::select('name','id')
         ->where('college_id','=',session()->get('college_id'))
         ->where('department_id','=',session()->get('department_id'))
         ->where('stage','=',session()->get('stage'))->get();
         
-        $url = '/show-lecture-marks';
+         $url = '/show-lecture-marks';
          return view('student.select-lecture',compact(['lectures','url']));
    
 
     }
-
+    /*
+       shows the lectures for marks, it could 
+       be optimized with the other show lectures to make 
+       because they all do the same task
+       */
     public function showLectureMarks(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
 
         $marks = Mark::where('student_id','=',session()->get('user_id'))->
                        where('student_id','=',request('lecture_id'))->
@@ -80,12 +97,18 @@ class StudentController extends Controller
         return view('student.show-marks',compact('marks'));
     }
 
+
     /*
        showing the student all the lectures he is enrolled in 
        and making him select one  
     */
 
     public function selectLecture(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
 
         $lectures = Lecture::select('name','id')
         ->where('college_id','=',session()->get('college_id'))
@@ -105,6 +128,11 @@ class StudentController extends Controller
       */
 
     public function showLecture(Request $request){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
 
     $subjects = Subject::where('lecture_id','=',$request->lecture_id)->orderBy('created_at','desc')->get();;
     
@@ -115,6 +143,11 @@ class StudentController extends Controller
     }
 
     public function showAbsenceLectureStudent(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
 
         $lectures = Lecture::select('name','id')
 
@@ -128,7 +161,11 @@ class StudentController extends Controller
     }
   
     public function showAbsenceCount(){
-        
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
       $absence = Absence::where('lecture_id','=',request('lecture_id'))->
                            where('student_id','=',session()->get('user_id'))->
                            first();   
@@ -140,6 +177,9 @@ class StudentController extends Controller
         $took = 0;
    
        if(count($arr)){                    
+           // chosing else if instead of else 
+           // because it can be null 
+
        if($absence->first_lecture===0) $count++;
        else if ($absence->first_lecture===1) $took++;
 
@@ -172,23 +212,35 @@ class StudentController extends Controller
 
 
        }
-       $sum = $count+$took;
-       return view('student.show-absence',compact(['count','sum','took']));
+        return view('student.show-absence',compact(['count','took']));
      
 
      }
     public function showTimetable(){
-        $student = Student::find(session()->get('user_id'))->first();
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
+        $student = Student::find(session()->get('user_id'));
          $timetable = Timetable::where('college_id','=',$student->college_id)
                      ->where('department_id','=',$student->department_id)
                      ->where('stage','=',$student->stage)->first();
-
+         if(empty($timetable)) {
+             $note = "There are no timetables yet";
+             return view('layouts.master',compact('note'));
+         }
         return view('student.show-timetable',compact('timetable'));
 
 
     }
     public function showInfo(){
-        $student = Student::find(session()->get('user_id'))->first();
+        if(!empty(session()->get('user'))&&session()->get('user')!=='student')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
+        $student = Student::find(session()->get('user_id'));
         $lectures = Lecture::where('department_id','=',$student->department_id)
                     ->where('college_id','=',$student->college_id)
                     ->where('stage','=',$student->stage)->get();
@@ -203,6 +255,7 @@ class StudentController extends Controller
     
     public function register()
     {
+
         return view ('student.register');
     }
 }

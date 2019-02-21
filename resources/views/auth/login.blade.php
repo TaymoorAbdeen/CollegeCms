@@ -10,19 +10,39 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <!-- CSRF Token -->
- 
-
-  <title>AdminLTE 3 | Starter</title>
+  
+  <title>Login or Register</title>
   <link rel="stylesheet" href="/css/app.css">
+ 
 </head>
 
 <body class="hold-transition register-page">
-    <div class="register-box">
+     <div class="register-box">
       <div class="register-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="../../index2.html"><b>Kirkuk</b>CMS</a>
+        <img src="{{URL::asset('img/logo.png')}}" alt="">
       </div>
-    
+
+      {{-- @if ($errors->any())
+      <div class="notification is-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif --}}
+
+      @if (Session::has('message'))
+
+    <div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fa fa-ban"></i> Alert!</h5>
+    {{session()->get('message')}}  </div>
+ 
+       @endif
       <div class="card">
+       
         <div class="card-body register-card-body">
           <p class="login-box-msg">If you are already  a user </p>
     
@@ -44,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           
            
               <!-- /.col -->
-              <div class="col-4">
+              <div class="mb-3">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Sign in</button>
               </div>
               <!-- /.col -->
@@ -75,7 +95,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                
             
                 <!-- /.col -->
-                <div class="col-4">
+                <div class="mb-3">
                   <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
                 </div>
                 <!-- /.col -->
