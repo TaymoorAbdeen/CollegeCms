@@ -1,6 +1,6 @@
 # Kirkuk CMS
- a content management system for universities built in laravel framework
-it has three user types 
+ a content management system for universities built in laravel framework.
+It has three user types 
 
 | Type | Role |
 | ----------- | ----------- |
@@ -33,3 +33,11 @@ relative to your role.
 4. View profile.
 5. Logout.
 
+## If you are a student you will see: 
+1. Lectures.
+2. Marks.
+3. Absence.
+4. Timetable.
+5. Profile.
+6. Logout.
+---
