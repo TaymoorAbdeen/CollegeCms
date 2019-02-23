@@ -62,7 +62,7 @@ a{
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-           <img src="{{URL::asset('uploads/images/profile_pictures')}}{{'/'.session()->get('profile_picture')}}" class="img-circle elevation-2" alt="User Image">
+            <img class="profile-user-img img-fluid img-circle" src="{{URL::asset('uploads/images/profile_pictures')}}{{'/'.session()->get('profile_picture')}}" alt="User profile picture">
         </div>
         <div class="info">
           <a href="#" class="d-block">

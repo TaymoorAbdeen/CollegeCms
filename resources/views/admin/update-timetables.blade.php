@@ -1,6 +1,12 @@
  @foreach ($timetables as $timetable)
 
-<div class="card card-primary">
+<div class="card card-primary card-outline">
+
+        <div class="card-tools">
+ 
+                <a  href="/lectures/delete/timetable/{{$timetable->id}}"><button type="button" class="btn btn-tool"><i class="fa fa-trash-alt red"></i></button></a>
+        
+            </div>
     <div class="card-header">
         <h3 class="card-title">Lecture post</h3>
     </div>
@@ -39,6 +45,8 @@
                 <label for="attachment"> old attachment</label>
                 <a href="{{URL::asset('uploads/lectures')}}{{'/'.$timetable->attachment}}" download="newfilename">Download the attachment</a>
             </div>
+            <label> Posted {{$timetable->updated_at->diffForHumans() }}</label>
+
 
  
 
@@ -53,7 +61,6 @@
 
 
 </div>
-<a href="/lectures/delete/timetable/{{$timetable->id}}"><button class="btn btn-danger">Delete</button></a>
 
 @endforeach
  

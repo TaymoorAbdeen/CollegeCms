@@ -1,6 +1,5 @@
 # Kirkuk CMS
----
-a content management system for universities built in laravel framework
+ a content management system for universities built in laravel framework
 it has three user types 
 
 | Type | Role |
