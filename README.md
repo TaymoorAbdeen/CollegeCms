@@ -41,3 +41,5 @@ relative to your role.
 5. Profile.
 6. Logout.
 ---
+# Conclusion
+> While developing this app I paid no attention to security vulnerabalities so I wouldn't recommend using it for anything than just to experement with it.
