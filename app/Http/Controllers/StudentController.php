@@ -92,7 +92,7 @@ class StudentController extends Controller
         return redirect('/');
 
         $marks = Mark::where('student_id','=',session()->get('user_id'))->
-                       where('student_id','=',request('lecture_id'))->
+                       where('lecture_id','=',request('lecture_id'))->
                                first();
         return view('student.show-marks',compact('marks'));
     }
