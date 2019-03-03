@@ -19,6 +19,9 @@ class MainController extends Controller
 
         return view('auth.login');
     }
+    public function landing(){
+        return view('welcome');
+    }
 
     public function logout(){
 

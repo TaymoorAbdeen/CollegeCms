@@ -5,6 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Student::class, function (Faker $faker) {
     return [
         //
+        
         'name' => $faker->name,
         'password' => bcrypt('secret'),
         'email' => $faker->safeEmail,
@@ -17,10 +18,6 @@ $factory->define(App\Student::class, function (Faker $faker) {
          'created_at' => $faker->dateTime('now'),
          'updated_at' => $faker->dateTime('now'),
          'profile_picture' =>$faker->sentence(),
-
-
-
-
 
     ];
 });

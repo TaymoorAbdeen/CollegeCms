@@ -94,7 +94,7 @@ a{
 
                   @if (session()->get('user')=='admin')
                   <a class="nav-link nav-click" href="/edit-marks-s-lecture">
-                    <i class="fas fa-tachometer-alt blue"></i>
+                    <i class="fas fa-marker yellow"></i>
 
                     <p>
                        Post or Edit Marks

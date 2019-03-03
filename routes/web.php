@@ -1,6 +1,7 @@
 <?php
 
-
+// login page 
+ Route::get('/landing','MainController@landing');
 // main controller
 Route::get('/','MainController@index');
 Route::post('/','MainController@check');
@@ -9,7 +10,6 @@ Route::get('/main','MainController@mainPage');
 
 
 // student controllers 
-
 Route::get('/regst','StudentController@register');
 Route::post('/regst','StudentController@store');
 Route::get('/select-lecture-st','StudentController@selectLecture');
