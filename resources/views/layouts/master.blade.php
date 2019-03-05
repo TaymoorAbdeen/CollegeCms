@@ -266,6 +266,17 @@ a{
               @endif
            </li>
            
+           <li class="nav-item has-treeview">
+              @if (session()->get('user')=='admin')
+              <a class="nav-link nav-click" href="/create/subject">
+                <i class="fas fa-info-circle orange"></i>
+
+                <p>
+                    Create subjects
+                </p>
+               </a>
+              @endif
+           </li>
            {{-- end of fifth link --}}
           <li class="nav-item">
              <a   href="/logout" class="nav-link"   >
@@ -358,9 +369,15 @@ a{
                  <h5><i class="icon fa fa-check"></i> Alert!</h5>
                  {{$messageDeleteTimetable}}
                 </div>
+                @elseif (!empty($messageSubject))
+                <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                {{$messageSubject}}
+               </div>
                   @endif
 
-                  
+
                   <!-- End alerts -->
 
     

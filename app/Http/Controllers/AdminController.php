@@ -11,6 +11,7 @@ use App\Mark;
 use App\Timetable;
 use App\idReg;
 use Illuminate\Support\Facades\DB;
+use App\Subject;
 
 class AdminController extends Controller
 {
@@ -294,6 +295,39 @@ class AdminController extends Controller
         }
 
       }
+
+      public function createSubject(){
+        if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
+        return redirect('/main');
+
+        else if(empty(session()->get('user')))
+        return redirect('/');
+
+        return view('admin.create-subject');
+      }
+
+      public function storeSubject(){
+        $this->validate(request(),[
+           'name' => 'required',
+           'stage' => 'required'
+          ]);
+
+          $admin = Admin::select('department_id','college_id')->
+          where('id','=',session()->get('user_id'))->first();
+          Lecture::create([
+            'name' => request('name'),
+             'stage' =>request('stage'),
+             'college_id'=>$admin->college_id,
+             'department_id'=>$admin->department_id,
+
+          ]);
+         $messageSubject= "created subject successfully";
+         return view('layouts.master',compact('messageSubject'));
+      }
+
+
+
+
       public function showInfo(){
         if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
         return redirect('/main');
