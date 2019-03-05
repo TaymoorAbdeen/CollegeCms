@@ -51,6 +51,8 @@ Route::get('/lectures/delete/timetable/{id}','AdminController@deleteTimetable');
 Route::get('/select/id/te-st','AdminController@selectIdType');
 Route::post('/id/number','AdminController@StoreId');
 Route::get('/info/a','AdminController@showInfo');
+Route::get('/create/subject','AdminController@createSubject');
+Route::post('/store/subject','AdminController@storeSubject');
 
  
 

@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                     <?php $lectures = session()->get('lectures'); ?>
            
                        <label for="teching">Teaching</label> <br>
@@ -74,7 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                            <input type="radio" class="teaching" value="{{$lecture->name}}" name="">{{$lecture->name}} <br>
                             @endforeach
             
-                       <input type="text" id="teaches" name="teaches">
+                       <input type="text" class="form-control" id="teaches" name="teaches">
                    </div>
            
               
@@ -152,7 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       $(".teaching").click(function() {
         var st="";
-        $(".teaching:checked").each(function() { st += this.value+' '; });
+        $(".teaching:checked").each(function() { st += this.value+','; });
         $("#teaches").val(st);
       });
     })

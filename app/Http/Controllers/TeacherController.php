@@ -42,7 +42,7 @@ class TeacherController extends Controller
         $arr = $teacher->teaches;
         
         // splitting the string by blank spaces 
-        $arr = explode(" ", $arr);
+        $arr = explode(",", $arr);
         $id = $teacher->id;
 
       for($i = 0;$i <count($arr);$i++){
