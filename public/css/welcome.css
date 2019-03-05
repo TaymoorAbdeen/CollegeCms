@@ -1,0 +1,290 @@
+
+    /* Navbar Section style =--(start)--> */
+    #navbar-section .logo {
+        font-size: 1.4rem;
+        color: #555;
+      }
+      #navbar-section a {
+        font-size: 1rem;
+        color: #555;
+      }
+      
+      /* Navbar Section style <--(end)--= */
+  
+  
+      
+      /* Header Section style =--(start)--> */
+      #header-section{
+        background-image: url('images/background1.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: contain;
+        background-size: 100%;
+        font-weight: bold;
+      }
+      /* Header Section style <--(end)--= */
+      
+      
+      /* Republic Section style =--(start)--> */
+      #republic-section img{
+        box-shadow: 0 0 20px rgba(95,125,149,0.3);
+        border-radius: 1.3rem;
+      }
+      /* Republic Section style <--(end)--= */
+      
+      
+      
+      /* Login Section style =--(start)--> */
+      #login-section {
+        /* background-image: url('images/login.png'); */
+        /* background-repeat: no-repeat; */
+        /* background-size: cover;       */
+      }
+      .btn-login{
+        font-size: 1em;
+        padding: 0.5rem 3rem;
+        border-radius: 2rem;
+        box-shadow: 0 0 20px rgba(95,125,149,0.3);
+      }
+      .login-side img {
+        box-shadow: 0 0 20px rgba(95,125,149,0.3);
+      }
+      /* Login Section style <--(end)--= */
+      
+      
+      /* Team Section style =--(start)--> */
+      #team-section{
+        background-image: url('images/paralax.png');
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      .team {
+        padding: 10px 0;
+        color: #434343;
+        text-align: center;
+      }
+      .team h1, .team h4 {
+        color: #3490dc;
+      }
+      .inner {
+        max-width: 1200px;
+        margin: auto;
+        overflow: hidden;
+        padding: 0 20px;
+      }
+      .team-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      } 
+      .col {
+        flex: 25%;
+        max-width: 25%;
+        box-sizing: border-box;
+        padding: 25px;
+      }
+      .team-member {
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 20px rgba(95,125,149,0.3);
+        transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+      }
+      .team-member:hover {
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+      }
+      .team-member img {
+        width: 75%;
+        height: 75%;
+        border-radius: 50%;
+        box-shadow: 0 1px 20px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
+      }
+      .member-name {
+        font-size: 20px;
+        text-transform: uppercase;
+        margin: 0px 0;
+      }
+      .member-icons {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      @media screen and (max-width:960px) {
+        .col {
+          flex: 50%;
+          max-width: 80%;
+        }
+      }
+      @media screen and (max-width:600px) {
+        #header-section{
+          background-size: cover;
+        }
+        .col {
+          flex: 50%;
+          max-width: 100%;
+        }
+      }
+      /* Team Section style <--(end)--= */
+  
+  
+      /* Guide Section style =--(start)--> */
+      #guide-section {
+        background-image: url('images/paralax.png');
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      #guide-section .card{
+        border-radius: 1rem;
+        box-shadow: 0 0 20px rgba(95,125,149,0.3);
+        transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+      }
+      #guide-section .card:hover{
+        cursor: pointer;
+        box-shadow: 0 1px 20px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
+      }
+      #homeVideo button.btn.btn-default {
+        background: rgba(0, 0, 0, 0.12);
+        padding: 0 5px;
+        border-radius: 10%;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        z-index: 5;
+        color: white;
+      }
+  
+      /* Guide Section style <--(end)--= */
+      
+      
+      /* skill style =--(start)--> */
+      #skill-section {
+        background-image: url('images/paralax.png');
+        /* background-position: top right ; */
+        background-size: cover
+      }
+      .progress .progress-bar{
+          width: 0;
+          transition: all ease 0.5s
+      }
+      /* skill style <--(end)--= */
+      
+      
+      /* Contact Section style =--(start)--> */
+      #contact-section {
+        background-image: url('images/paralax.png');
+        /* background-position: top right ; */
+        background-size: cover
+        /* background-color: ; */
+      }
+      #contact-section .container{
+        padding: 40px 20px;
+        border-radius: 1rem;
+        box-shadow: 0 0 20px rgba(95,125,149,0.3);
+        transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+      }
+      
+      /* #contact-section input,
+      #contact-section input[:placeholder],
+      #contact-section textarea[:placeholder],
+      #contact-section textarea {
+        background: transparent;
+        color: #000;
+  
+      } */
+      /* Contact Section style <--(end)--= */
+  
+  
+      /* Footer Section style =--(start)--> */
+          #footer-section{
+        background-image: url('images/paralax.png');
+        /* background-position: top right ; */
+        background-size: cover
+  
+          }
+      .svg-inline--fa {
+    vertical-align: -0.200em;
+  }
+  
+  .rounded-social-buttons {
+    text-align: center;
+  }
+  
+  .rounded-social-buttons .social-button {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 3.125rem;
+    height: 3.125rem;
+    border: 0.125rem solid transparent;
+    padding: 0;
+    text-decoration: none;
+    text-align: center;
+    color: #fefefe;
+    font-size: 1.5625rem;
+    font-weight: normal;
+    line-height: 2em;
+    border-radius: 1.6875rem;
+    transition: all 0.5s ease;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .rounded-social-buttons .social-button:hover, .rounded-social-buttons .social-button:focus {
+    -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+  
+  .rounded-social-buttons .fa-twitter, .fa-facebook-f, .fa-linkedin, .fa-youtube, .fa-instagram {
+    font-size: 25px;
+  }
+  
+  .rounded-social-buttons .social-button.facebook {
+    background: #3b5998;
+  }
+  
+  .rounded-social-buttons .social-button.facebook:hover, .rounded-social-buttons .social-button.facebook:focus {
+    color: #3b5998;
+    background: #fefefe;
+    border-color: #3b5998;
+  }
+  
+  .rounded-social-buttons .social-button.twitter {
+    background: #55acee;
+  }
+  
+  .rounded-social-buttons .social-button.twitter:hover, .rounded-social-buttons .social-button.twitter:focus {
+    color: #55acee;
+    background: #fefefe;
+    border-color: #55acee;
+  }
+  
+  .rounded-social-buttons .social-button.linkedin {
+    background: #007bb5;
+  }
+  
+  .rounded-social-buttons .social-button.linkedin:hover, .rounded-social-buttons .social-button.linkedin:focus {
+    color: #007bb5;
+    background: #fefefe;
+    border-color: #007bb5;
+  }
+  
+  .rounded-social-buttons .social-button.youtube {
+    background: #bb0000;
+  }
+  
+  .rounded-social-buttons .social-button.youtube:hover, .rounded-social-buttons .social-button.youtube:focus {
+    color: #bb0000;
+    background: #fefefe;
+    border-color: #bb0000;
+  }
+  
+  .rounded-social-buttons .social-button.instagram {
+    background: #125688;
+  }
+  
+  .rounded-social-buttons .social-button.instagram:hover, .rounded-social-buttons .social-button.instagram:focus {
+    color: #125688;
+    background: #fefefe;
+    border-color: #125688;
+  }
+      /* Footer Section style <--(end)--= */
+      
