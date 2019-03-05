@@ -13,13 +13,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
   <title>Login or Register</title>
   <link rel="stylesheet" href="/css/app.css">
- 
+ <style>
+  body{
+    background-color: #cae5ff !important;
+  }
+ </style>
 </head>
 
 <body class="hold-transition register-page">
      <div class="register-box">
       <div class="register-logo">
-        <a href="../../index2.html"><b>Kirkuk</b>CMS</a>
+        <a href="#"><b>Kirkuk</b>CMS</a>
         <img src="{{URL::asset('img/logo.png')}}" alt="">
       </div>
 

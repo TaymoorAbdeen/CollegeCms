@@ -1,4 +1,5 @@
- 
+@extends('layouts.master')
+@section('content') 
 @foreach ($timetables as $timetable)
 
 <div class="card card-primary card-outline">
@@ -14,4 +15,4 @@
     </div>
     @endforeach
 
-  
+  @endsection

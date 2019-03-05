@@ -1,4 +1,5 @@
- 
+@extends('layouts.master')
+@section('content') 
  
 <div class="card card-primary card-outline">
         <div class="card-body box-profile">
@@ -40,4 +41,4 @@
       </div>
     
  
-  
+  @endsection

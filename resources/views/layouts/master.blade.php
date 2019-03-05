@@ -62,7 +62,7 @@ a{
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img class="profile-user-img img-fluid img-circle" src="{{URL::asset('uploads/images/profile_pictures')}}{{'/'.session()->get('profile_picture')}}" alt="User profile picture">
+            <img class="  img-fluid img-circle" src="{{URL::asset('uploads/images/profile_pictures')}}{{'/'.session()->get('profile_picture')}}" alt="User profile picture">
         </div>
         <div class="info">
           <a href="#" class="d-block">
@@ -324,7 +324,7 @@ a{
  <script>
     $('document').ready(function(){
 
-      $('.nav-click').click(function (event) {
+      $('.nav-clic').click(function (event) {
         // Avoid the link click from loading a new page
         event.preventDefault();
     

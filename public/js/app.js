@@ -73863,6 +73863,6 @@ __webpack_require__(/*! C:\xampp\htdocs\kirkuk\resources\js\app.js */"./resource
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\kirkuk\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
-/***/ })
+/***/ }),
 
 /******/ });

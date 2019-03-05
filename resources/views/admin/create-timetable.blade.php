@@ -1,4 +1,5 @@
- 
+@extends('layouts.master')
+@section('content')  
 <div class="card card-primary">
         <div class="card-header">
           <h3 class="card-title">Lecture post</h3>
@@ -48,5 +49,5 @@
           </div>
         </form>
       </div>    
-
+@endsection
  

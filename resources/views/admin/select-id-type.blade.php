@@ -1,3 +1,5 @@
+@extends('layouts.master')
+@section('content') 
 <div class="card card-default">
         <div class="card-header">
           <h3 class="card-title">Select2</h3>
@@ -33,3 +35,4 @@
         <!-- /.card-body -->
         
       </div>
+      @endsection
