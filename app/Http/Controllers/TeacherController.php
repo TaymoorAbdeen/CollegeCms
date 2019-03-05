@@ -41,7 +41,7 @@ class TeacherController extends Controller
         $teacher =Teacher::latest()->first();
         $arr = $teacher->teaches;
         
-        // splitting the string by blank spaces 
+        // splitting the string by commas spaces 
         $arr = explode(",", $arr);
         $id = $teacher->id;
 

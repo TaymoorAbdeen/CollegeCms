@@ -7,6 +7,7 @@ Route::get('/','MainController@index');
 Route::post('/','MainController@check');
 Route::get('/logout','MainController@logout');
 Route::get('/main','MainController@mainPage');
+Route::get('/contact-us','MainController@contactUs');
 
 
 // student controllers 

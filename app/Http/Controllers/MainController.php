@@ -161,4 +161,10 @@ class MainController extends Controller
 
 
     }
+
+    public function contactUs(){
+        if(empty(session()->get('user')))
+         return redirect('/');
+       return view('contact-us');            
+    }
 }

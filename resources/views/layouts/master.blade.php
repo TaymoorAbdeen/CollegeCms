@@ -20,21 +20,21 @@ a{
 <div class="wrapper" id="app">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom ">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="/main" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="/contact-us" class="nav-link">Contact Us</a>
       </li>
     </ul>
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    {{-- <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
@@ -43,7 +43,7 @@ a{
           </button>
         </div>
       </div>
-    </form>
+    </form> --}}
 
   </nav>
   <!-- /.navbar -->
@@ -103,7 +103,7 @@ a{
                   @endif
                   @if (session()->get('user')=='teacher')
                   <a class="nav-link nav-click" href="/create-lecture">
-                    <i class="fas fa-tachometer-alt blue"></i>
+                    <i class="fas fa-book-open blue"></i>
 
                     <p>
                         Post Lecture
@@ -131,7 +131,7 @@ a{
 
                   @if (session()->get('user')=='admin')
                   <a class="nav-link nav-click" href="/lectures/create/timetable">
-                    <i class="fas fa-tachometer-alt green"></i>
+                    <i class="fas fa-table green"></i>
 
                     <p>
                         Post Timetable 
@@ -140,7 +140,7 @@ a{
                   @endif
                   @if (session()->get('user')=='teacher')
                   <a class="nav-link nav-click" href="/lectures">
-                    <i class="fas fa-tachometer-alt green"></i>
+                    <i class="fas fa-edit"></i>
 
                     <p>
                         Update or delete lecture 
@@ -166,7 +166,7 @@ a{
 
                   @if (session()->get('user')=='admin')
                   <a class="nav-link nav-click" href="/lectures/timetables">
-                    <i class="fas fa-tachometer-alt blue"></i>
+                    <i class="fas fa-table blue"></i>
 
                     <p>
                         Update timetables 
@@ -175,7 +175,7 @@ a{
                   @endif
                   @if (session()->get('user')=='teacher')
                   <a class="nav-link nav-click" href="/select-lecture-absence">
-                    <i class="fas fa-tachometer-alt red"></i>
+                    <i class="fas fa-times-circle yellow"></i>
 
                     <p>
                         Edit absence
@@ -203,7 +203,7 @@ a{
 
               @if (session()->get('user')=='admin')
               <a class="nav-link nav-click" href="/select/id/te-st">
-                <i class="fas fa-tachometer-alt blue"></i>
+                <i class="fas fa-id-card  "></i>
 
                 <p>
                     Create Id
@@ -212,7 +212,7 @@ a{
               @endif
               @if (session()->get('user')=='teacher')
               <a class="nav-link nav-click" href="/show/timetable/te">
-                <i class="fas fa-tachometer-alt orange"></i>
+                <i class="fas fa-table purple"></i>
 
                 <p>
                     View Timetables
@@ -238,7 +238,7 @@ a{
 
               @if (session()->get('user')=='admin')
               <a class="nav-link nav-click" href="/info/a">
-                <i class="fas fa-tachometer-alt yellow"></i>
+                <i class="fas  fa-info-circle yellow"></i>
 
                 <p>
                     View Profile
@@ -247,7 +247,7 @@ a{
               @endif
               @if (session()->get('user')=='teacher')
               <a class="nav-link nav-click" href="/info/t">
-                <i class="fas fa-tachometer-alt orange"></i>
+                <i class="fas  fa-info-circle orange"></i>
 
                 <p>
                     View Profile
@@ -260,7 +260,7 @@ a{
                 <i class="fas fa-info-circle orange"></i>
 
                 <p>
-                    Profile
+                   View Profile
                 </p>
                </a>
               @endif
@@ -269,7 +269,7 @@ a{
            <li class="nav-item has-treeview">
               @if (session()->get('user')=='admin')
               <a class="nav-link nav-click" href="/create/subject">
-                <i class="fas fa-info-circle orange"></i>
+                <i class="fas fa-newspaper orange"></i>
 
                 <p>
                     Create subjects
