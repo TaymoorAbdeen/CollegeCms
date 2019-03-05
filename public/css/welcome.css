@@ -15,7 +15,7 @@
       
       /* Header Section style =--(start)--> */
       #header-section{
-        background-image: url('images/background1.png');
+        background-image: url('/images/background1.png');
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: contain;
@@ -54,7 +54,7 @@
       
       /* Team Section style =--(start)--> */
       #team-section{
-        background-image: url('images/paralax.png');
+        background-image: url('/images/paralax.png');
         background-attachment: fixed;
         background-size: cover;
       }
@@ -127,7 +127,7 @@
   
       /* Guide Section style =--(start)--> */
       #guide-section {
-        background-image: url('images/paralax.png');
+        background-image: url('/images/paralax.png');
         background-attachment: fixed;
         background-size: cover;
       }
@@ -156,7 +156,7 @@
       
       /* skill style =--(start)--> */
       #skill-section {
-        background-image: url('images/paralax.png');
+        background-image: url('/images/paralax.png');
         /* background-position: top right ; */
         background-size: cover
       }
@@ -169,7 +169,7 @@
       
       /* Contact Section style =--(start)--> */
       #contact-section {
-        background-image: url('images/paralax.png');
+        background-image: url('/images/paralax.png');
         /* background-position: top right ; */
         background-size: cover
         /* background-color: ; */
@@ -194,7 +194,7 @@
   
       /* Footer Section style =--(start)--> */
           #footer-section{
-        background-image: url('images/paralax.png');
+        background-image: url('/images/paralax.png');
         /* background-position: top right ; */
         background-size: cover
   
