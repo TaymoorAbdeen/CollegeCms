@@ -301,6 +301,68 @@ a{
           
                       
                   @endif
+                 <!-- Creating alerts -->
+                  @if(!empty($messageCreatingLecture))
+                  <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                    {{$messageCreatingLecture}}
+                   </div>
+                     @elseif (!empty($messageLectureUpdate))
+
+                  <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                    {{$messageLectureUpdate}}
+                   </div>
+
+                   
+                   @elseif (!empty($messageLectureDelete))
+                   <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                    {{$messageLectureDelete}}
+                   </div>
+                   @
+                   @elseif (!empty($messageAbsence))
+                   <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                    {{$messageAbsence}}
+                   </div>
+                   
+                   @elseif (!empty($messageMarks))
+                    <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                    {{$messageMarks}}
+                   </div>
+
+                   @elseif (!empty($messageCreateTimetable))
+                   <div class="alert alert-success alert-dismissible">
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                   <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                   {{$messageCreateTimetable}}
+                  </div>
+
+                  @elseif (!empty($messageUpdateTimetable))
+                  <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                  {{$messageUpdateTimetable}}
+                 </div>
+
+                 @elseif (!empty($messageDeleteTimetable))
+                 <div class="alert alert-success alert-dismissible">
+                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                 <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                 {{$messageDeleteTimetable}}
+                </div>
+                  @endif
+
+                  
+                  <!-- End alerts -->
+
     
       </div><!-- /.container-fluid -->
     </div>

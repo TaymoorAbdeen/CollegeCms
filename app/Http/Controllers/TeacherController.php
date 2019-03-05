@@ -169,7 +169,8 @@ class TeacherController extends Controller
               'lecture_id' =>$request->lecture_id,
               
          ]);
-          return view('layouts.master');
+         $messageCreatingLecture = "Post was created successflly!";
+          return view('layouts.master',compact('messageCreatingLecture'));
 
    }
    public function selectLectureUpDel(){
@@ -205,6 +206,8 @@ class TeacherController extends Controller
 
     return view('teacher.show-lectures',compact('subjects'));    
    }
+
+
    public function updateLecture($id){
     if(!empty(session()->get('user'))&&session()->get('user')!=='teacher')
     return redirect('/main');
@@ -217,7 +220,8 @@ class TeacherController extends Controller
 
       $subject->name = request('name');
        $subject->save();
-       return redirect('/main');
+       $messageLectureUpdate = "Lecture was updated successfully!";
+       return view('layouts.master',compact('messageLectureUpdate'));
  
    }
 
@@ -231,8 +235,8 @@ class TeacherController extends Controller
 
     $subject = Subject::findOrFail($id);
      $subject->delete();
-    return redirect('/main');
-
+     $messageLectureDelete = "Lecture was deleted successfully!";
+     return view('layouts.master',compact('messageLectureDelete'));
 
    }
    public function selectLectureAbsence(){
@@ -315,7 +319,8 @@ class TeacherController extends Controller
         }
 
     session()->forget('lecture_id');
-return redirect('/main');
+    $messageAbsence = "absence was updated successfully";
+return view('layouts.master',compact('messageAbsence'));
 
 
    }

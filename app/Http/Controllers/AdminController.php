@@ -151,9 +151,9 @@ class AdminController extends Controller
 
              session()->forget('lecture_id');
              session()->forget('teacher_id');
-
-         
-    return redirect('/main');
+     
+    $messageMarks = "Marks was updated successfully!";     
+    return view('layouts.master',compact('messageMarks'));
  
 
      }
@@ -193,8 +193,12 @@ class AdminController extends Controller
              'college_id'=>$admin->college_id,
              'department_id'=>$admin->department_id
          ]);
+         $messageCreateTimetable = "Timetable was created successfully!";
+         return view('layouts.master',compact('messageCreateTimetable'));
 
-         return redirect('/main');
+
+
+         return redirvieect('/main');
 
      }
 
@@ -229,8 +233,12 @@ class AdminController extends Controller
           $timetable->description = request('description');
           $timetable->stage = request('stage');
           $timetable->save();
-          return redirect('/main');
+          $messageUpdateTimetable = "Timetable was updated successfully!";
+  
 
+          return view('layouts.master',compact('messageUpdateTimetable'));
+
+ 
       }
       public function deleteTimetable($id){
         if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
@@ -240,8 +248,10 @@ class AdminController extends Controller
         return redirect('/');
         $timetable = Timetable::findOrFail($id);
         $timetable->delete();
-        return redirect('/main');
-    }
+
+        $messageDeleteTimetable = "Timetable was deleted successfully!";
+        return view('layouts.master',compact('messageDeleteTimetable')); 
+         }
       public function selectIdType(){
         if(!empty(session()->get('user'))&&session()->get('user')!=='admin')
         return redirect('/main');
@@ -267,7 +277,7 @@ class AdminController extends Controller
                  'college_id' =>$admin->college_id,
                  'department_id'=>$admin->department_id
                 ]);
-                return view ('admin.show-id',compact('num'));
+                 return view ('admin.show-id',compact('num'));
 
             }
             else {
